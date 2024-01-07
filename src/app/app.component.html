@@ -27,7 +27,13 @@
     </div>
 
     <div class="col-sm-12 col-lg-3">
-      <span class="h4 m-1">concatMap</span>
+      <span
+        class="h4 m-1"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Memorizes the exact order of emits and does them in the same order, one by one"
+        >concatMap</span
+      >
       <button
         class="btn btn-primary"
         (click)="concatMapExample()"
@@ -40,7 +46,13 @@
     </div>
 
     <div class="col-sm-12 col-lg-3">
-      <span class="h4 m-1">mergeMap</span>
+      <span
+        class="h4 m-1"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Executes all of the streams once they emit value, no matter the order"
+        >mergeMap</span
+      >
 
       <button
         class="btn btn-primary"
@@ -54,7 +66,13 @@
     </div>
 
     <div class="col-sm-12 col-lg-3">
-      <span class="h4 m-1">exhaustMap</span>
+      <span
+        class="h4 m-1"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Doesn't bother other calls once is busy working with one or specified amount of streams"
+        >exhaustMap</span
+      >
 
       <button
         class="btn btn-secondary"
