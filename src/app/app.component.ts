@@ -117,4 +117,8 @@ export class AppComponent {
       )
       .subscribe();
   }
+
+  public clearTable() {
+    this.data = [];
+  }
 }
