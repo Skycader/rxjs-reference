@@ -27,7 +27,15 @@ export class AppComponent {
   public data: any[] = [];
   public stream$ = new Subject<number>();
   constructor(private apiService: ApiService) { }
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    this.apiService.requestingPersonId$.subscribe((id: any) => {
+      console.log('got id', id);
+      this.activeBtns[id] = true;
+      setTimeout(() => {
+        this.activeBtns[id] = false;
+      }, id * 1000);
+    });
+  }
 
   public ngAfterViewInit() {
     var tooltipTriggerList = [].slice.call(
@@ -52,8 +60,14 @@ export class AppComponent {
       .subscribe();
   }
 
+  public activeBtns: boolean[] = [];
+  public disabledBtns: boolean[] = [];
   public emitValue(value: number) {
+    this.disabledBtns[value] = true;
     this.stream$.next(value);
+    setTimeout(() => {
+      this.disabledBtns[value] = false;
+    }, value * 1000);
   }
 
   public concatStream$: Subscription | null = null;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, of, tap } from 'rxjs';
+import { Subject, delay, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,12 +39,17 @@ export class ApiService {
   ];
 
   public startTime = 0;
+
+  public requestingPersonId$ = new Subject();
   constructor() { }
 
   public getPersonById(id: number) {
     this.startTime = Date.now();
     return of(this.responses[id]).pipe(
-      tap(() => console.log('[Service] requesting id:', id)),
+      tap(() => {
+        console.log('[Service] requesting id:', id);
+        this.requestingPersonId$.next(id);
+      }),
       delay(id * 1000),
       tap(() =>
         console.log(

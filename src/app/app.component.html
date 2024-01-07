@@ -15,14 +15,26 @@
         >switchMap</span
       >
 
-      <button class="btn btn-primary" (click)="switchMapExample()">
+      <button
+        class="btn btn-primary"
+        (click)="switchMapExample()"
+        class="btn"
+        [class.btn-secondary]="!switchStream$"
+        [class.btn-primary]="switchStream$"
+      >
         {{ switchStream$ ? "Unsubscribe" : "Subscribe" }}
       </button>
     </div>
 
     <div class="col-sm-12 col-lg-3">
       <span class="h4 m-1">concatMap</span>
-      <button class="btn btn-primary" (click)="concatMapExample()">
+      <button
+        class="btn btn-primary"
+        (click)="concatMapExample()"
+        class="btn"
+        [class.btn-secondary]="!concatStream$"
+        [class.btn-primary]="concatStream$"
+      >
         {{ concatStream$ ? "Unsubscribe" : "Subscribe" }}
       </button>
     </div>
@@ -30,7 +42,13 @@
     <div class="col-sm-12 col-lg-3">
       <span class="h4 m-1">mergeMap</span>
 
-      <button class="btn btn-primary" (click)="mergeMapExample()">
+      <button
+        class="btn btn-primary"
+        (click)="mergeMapExample()"
+        class="btn"
+        [class.btn-secondary]="!mergeStream$"
+        [class.btn-primary]="mergeStream$"
+      >
         {{ mergeStream$ ? "Unsubscribe" : "Subscribe" }}
       </button>
     </div>
@@ -38,7 +56,12 @@
     <div class="col-sm-12 col-lg-3">
       <span class="h4 m-1">exhaustMap</span>
 
-      <button class="btn btn-primary" (click)="exhaustMapExample()">
+      <button
+        class="btn btn-secondary"
+        [class.btn-secondary]="!exhaustStream$"
+        [class.btn-primary]="exhaustStream$"
+        (click)="exhaustMapExample()"
+      >
         {{ exhaustStream$ ? "Unsubscribe" : "Subscribe" }}
       </button>
     </div>
@@ -46,13 +69,41 @@
 
   <hr />
   <div class="col-12">
-    <h2>Emit next value in:</h2>
+    <h2>Emit value</h2>
   </div>
   <div class="col-12">
-    <button class="btn btn-primary" (click)="emitValue(1)">Emit in 1s</button>
-    <button class="btn btn-success" (click)="emitValue(2)">Emit in 2s</button>
-    <button class="btn btn-danger" (click)="emitValue(3)">Emit in 3s</button>
-    <button class="btn btn-secondary" (click)="emitValue(4)">Emit in 4s</button>
+    <button
+      class="btn btn-primary e1s"
+      [class.active]="activeBtns[1]"
+      [disabled]="disabledBtns[1]"
+      (click)="emitValue(1)"
+    >
+      Betty in 1s
+    </button>
+    <button
+      class="btn btn-success e2s"
+      [class.active]="activeBtns[2]"
+      [disabled]="disabledBtns[2]"
+      (click)="emitValue(2)"
+    >
+      Charlie in 2s
+    </button>
+    <button
+      class="btn btn-danger e3s"
+      [class.active]="activeBtns[3]"
+      [disabled]="disabledBtns[3]"
+      (click)="emitValue(3)"
+    >
+      Daniel in 3s
+    </button>
+    <button
+      class="btn btn-secondary e4s"
+      [class.active]="activeBtns[4]"
+      [disabled]="disabledBtns[4]"
+      (click)="emitValue(4)"
+    >
+      Elon in 4s
+    </button>
   </div>
   <br />
   <div class="alert alert-warning" role="alert">

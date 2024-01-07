@@ -5,3 +5,33 @@
 button {
   margin: 5px;
 }
+
+button:after {
+  display: block;
+  content: "";
+  border-bottom: 2px solid yellow !important;
+  margin-right: 100%;
+  transition: linear;
+}
+
+.active {
+  &:after {
+    margin-right: 0%;
+  }
+
+  &.e1s:after {
+    transition-duration: 1s;
+  }
+
+  &.e2s:after {
+    transition-duration: 2s;
+  }
+
+  &.e3s:after {
+    transition-duration: 3s;
+  }
+
+  &.e4s:after {
+    transition-duration: 4s;
+  }
+}
