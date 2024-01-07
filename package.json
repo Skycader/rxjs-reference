@@ -5,6 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-for-github": "ng build --base-href https://skycader.github.io/rxjs-reference/",
+    "post-build-on-github": "npx angular-cli-ghpages --dir=dist/rxjs-reference/browser",
+    "pub": "yarn build-for-github && yarn post-build-on-github",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
