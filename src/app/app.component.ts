@@ -25,15 +25,16 @@ export class AppComponent {
     this.apiService.requestingPersonId$.subscribe((id: any) => {
       console.log('got id', id);
       this.activeBtns[id] = true;
+      this.disabledBtns[id] = true;
       setTimeout(() => {
         this.activeBtns[id] = false;
+        this.disabledBtns[id] = false;
       }, id * 1000);
     });
   }
 
   public pushData(value: any) {
     this.data.push(value);
-    this.disabledBtns[value.id] = false;
   }
 
   public ngAfterViewInit() {
@@ -62,14 +63,6 @@ export class AppComponent {
   public activeBtns: boolean[] = [];
   public disabledBtns: boolean[] = [];
   public emitValue(value: number) {
-    if (this.switchStream$ || this.concatStream$ || this.mergeStream$) {
-      this.disabledBtns[value] = true;
-    } else {
-      this.disabledBtns[value] = true;
-      setTimeout(() => {
-        this.disabledBtns[value] = false;
-      }, value * 1000);
-    }
     this.stream$.next(value);
   }
 
