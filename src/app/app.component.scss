@@ -1,5 +1,10 @@
 .col {
   display: flex;
+  flex-direction: column;
+
+  span {
+    text-align: center;
+  }
 }
 
 button {
