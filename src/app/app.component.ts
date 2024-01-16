@@ -62,12 +62,7 @@ export class AppComponent {
   public activeBtns: boolean[] = [];
   public disabledBtns: boolean[] = [];
   public emitValue(value: number) {
-    if (
-      this.switchStream$ ||
-      this.concatStream$ ||
-      this.mergeStream$ ||
-      this.exhaustStream$
-    ) {
+    if (this.switchStream$ || this.concatStream$ || this.mergeStream$) {
       this.disabledBtns[value] = true;
     } else {
       this.disabledBtns[value] = true;
