@@ -105,7 +105,7 @@ export class AppComponent {
     this.mergeStream$ = this.stream$
       .pipe(
         mergeMap((id) => this.apiService.getPersonById(id)),
-        tap((result: any) => this.data.push(result))
+        tap((result: any) => this.pushData(result))
       )
       .subscribe();
   }
@@ -121,7 +121,7 @@ export class AppComponent {
     this.exhaustStream$ = this.stream$
       .pipe(
         exhaustMap((id) => this.apiService.getPersonById(id)),
-        tap((result: any) => this.data.push(result))
+        tap((result: any) => this.pushData(result))
       )
       .subscribe();
   }
