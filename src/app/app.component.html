@@ -113,6 +113,7 @@
     <button
       class="btn btn-primary e1s"
       [class.active]="activeBtns[1]"
+      [class.signalSending]="signalSendingBtns[1]"
       [disabled]="disabledBtns[1]"
       (click)="emitValue(1)"
     >
@@ -120,6 +121,7 @@
     </button>
     <button
       class="btn btn-success e2s"
+      [class.signalSending]="signalSendingBtns[2]"
       [class.active]="activeBtns[2]"
       [disabled]="disabledBtns[2]"
       (click)="emitValue(2)"
@@ -128,6 +130,7 @@
     </button>
     <button
       class="btn btn-danger e3s"
+      [class.signalSending]="signalSendingBtns[3]"
       [class.active]="activeBtns[3]"
       [disabled]="disabledBtns[3]"
       (click)="emitValue(3)"
@@ -136,6 +139,7 @@
     </button>
     <button
       class="btn btn-secondary e4s"
+      [class.signalSending]="signalSendingBtns[4]"
       [class.active]="activeBtns[4]"
       [disabled]="disabledBtns[4]"
       (click)="emitValue(4)"

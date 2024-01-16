@@ -63,6 +63,7 @@ export class AppComponent {
   public activeBtns: boolean[] = [];
   public disabledBtns: boolean[] = [];
   public emitValue(value: number) {
+    this.sendSignal(value);
     this.stream$.next(value);
   }
 
@@ -133,6 +134,14 @@ export class AppComponent {
         tap((result: any) => this.data.push(...result))
       )
       .subscribe();
+  }
+
+  public signalSendingBtns: boolean[] = [];
+  public sendSignal(btnId: number) {
+    this.signalSendingBtns[btnId] = true;
+    setTimeout(() => {
+      this.signalSendingBtns[btnId] = false;
+    }, 500);
   }
 
   public clearTable() {

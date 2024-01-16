@@ -8,7 +8,10 @@
 }
 
 button {
+  box-sizing: border-box;
   margin: 5px;
+  transition-duration: 300ms;
+  outline: 0px solid yellow !important;
 }
 
 button:after {
@@ -17,6 +20,11 @@ button:after {
   border-bottom: 2px solid yellow !important;
   margin-right: 100%;
   transition: linear;
+}
+
+.signalSending {
+  box-shadow: 0px 0px 30px yellow;
+  color: yellow;
 }
 
 .active {
