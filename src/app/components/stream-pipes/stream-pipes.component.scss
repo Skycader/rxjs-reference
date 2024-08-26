@@ -1,0 +1,53 @@
+.col {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    text-align: center;
+  }
+}
+
+button {
+  opacity: 1 !important;
+  box-sizing: border-box;
+  margin: 5px;
+  transition-duration: 300ms;
+  outline: 0px solid yellow !important;
+}
+
+button:after {
+  display: block;
+  content: "";
+  border-bottom: 2px solid yellow !important;
+  margin-right: 100%;
+  transition: linear;
+}
+
+.signalSending {
+  box-shadow: 0px 0px 30px yellow !important;
+  border: 1px solid yellow;
+  color: yellow;
+  background: yellow;
+}
+
+.active {
+  &:after {
+    margin-right: 0%;
+  }
+
+  &.e1s:after {
+    transition-duration: 1s;
+  }
+
+  &.e2s:after {
+    transition-duration: 2s;
+  }
+
+  &.e3s:after {
+    transition-duration: 3s;
+  }
+
+  &.e4s:after {
+    transition-duration: 4s;
+  }
+}

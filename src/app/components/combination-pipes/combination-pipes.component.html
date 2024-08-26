@@ -1,0 +1,189 @@
+<div class="container">
+  <br />
+  <div class="row">
+    <div class="col col-12">
+      <h3>Combination Pipes</h3>
+    </div>
+    <div class="col col-sm-12 col-lg-3">
+      <button
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Zip..."
+        class="btn btn-primary"
+        (click)="setOperator(0)"
+        class="btn"
+        [class.btn-secondary]="currentOperator !== 0"
+        [class.btn-primary]="currentOperator === 0"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="currentOperator === 0"
+        />
+        Zip
+      </button>
+    </div>
+
+    <div class="col col-sm-12 col-lg-3">
+      <button
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="ForkJoin..."
+        class="btn btn-primary"
+        (click)="setOperator(1)"
+        class="btn"
+        [class.btn-secondary]="currentOperator !== 1"
+        [class.btn-primary]="currentOperator === 1"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="currentOperator === 1"
+        />
+        ForkJoin
+      </button>
+    </div>
+
+    <div class="col col-sm-12 col-lg-3">
+      <button
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="CombineLatest..."
+        class="btn btn-primary"
+        (click)="setOperator(2)"
+        class="btn"
+        [class.btn-secondary]="currentOperator !== 2"
+        [class.btn-primary]="currentOperator === 2"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="currentOperator === 2"
+        />
+        CombineLatest
+      </button>
+    </div>
+  </div>
+
+  <hr />
+  <div class="col-12">
+    <h2>Make a pair</h2>
+  </div>
+  <div class="col-12">
+    <button
+      class="btn e1s"
+      [class.btn-danger]="colorCompleted === false"
+      (click)="color$.next('red'); sendSignal(0)"
+      [class.signalSending]="signalSendingBtns[0]"
+      [disabled]="colorCompleted"
+    >
+      Red
+    </button>
+    <button
+      class="btn e1s"
+      [class.btn-success]="colorCompleted === false"
+      (click)="color$.next('green'); sendSignal(1)"
+      [class.signalSending]="signalSendingBtns[1]"
+      [disabled]="colorCompleted"
+    >
+      Green
+    </button>
+    <button
+      class="btn e1s"
+      [class.btn-primary]="colorCompleted === false"
+      (click)="color$.next('blue'); sendSignal(2)"
+      [class.signalSending]="signalSendingBtns[2]"
+      [disabled]="colorCompleted"
+    >
+      Blue
+    </button>
+
+    <button
+      class="btn e1s"
+      [class.btn-secondary]="colorCompleted === false"
+      (click)="colorCompleted$.next(true); sendSignal(6); colorCompleted = true"
+      [class.signalSending]="signalSendingBtns[6]"
+      [disabled]="colorCompleted"
+    >
+      Complete color stream
+    </button>
+    <hr />
+    <button
+      class="btn btn-secondary e1s"
+      [class.btn-secondary]="shapeCompleted === false"
+      (click)="shape$.next('square'); sendSignal(3)"
+      [class.signalSending]="signalSendingBtns[3]"
+      [disabled]="shapeCompleted"
+    >
+      Square
+    </button>
+    <button
+      class="btn btn-secondary e1s"
+      [class.btn-secondary]="shapeCompleted === false"
+      (click)="shape$.next('circle'); sendSignal(4)"
+      [class.signalSending]="signalSendingBtns[4]"
+      [disabled]="shapeCompleted"
+    >
+      Circle
+    </button>
+    <button
+      class="btn e1s"
+      [class.btn-secondary]="shapeCompleted === false"
+      (click)="shape$.next('triangle'); sendSignal(5)"
+      [class.signalSending]="signalSendingBtns[5]"
+      [disabled]="shapeCompleted"
+    >
+      Triangle
+    </button>
+
+    <button
+      class="btn btn-secondary e1s"
+      [class.btn-secondary]="shapeCompleted === false"
+      (click)="shapeCompleted$.next(true); sendSignal(7); shapeCompleted = true"
+      [class.signalSending]="signalSendingBtns[7]"
+      [disabled]="shapeCompleted"
+    >
+      Complete shape stream
+    </button>
+  </div>
+  <br />
+  <div class="alert alert-warning" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    Set the mode, and combinate the colors and shapes: <br />
+    1. ForkJoin works just like zip, but only once all the observables are
+    completed of observables are completed <br />
+    2. CombineLatest combines recent observables <br />3. Zip operator emits
+    value once all of observables have emitted values
+  </div>
+</div>
+
+<hr />
+<div class="container">
+  <div class="row">
+    <div class="col-9 col-sm-11 col-md-11 col-lg-11">
+      <span class="h2">Result</span>
+    </div>
+    <div class="col-1">
+      <button class="btn btn-primary" (click)="clearTable()">Clear</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-2" *ngFor="let result of results">
+        <svg *ngIf="result.shape === 'square'">
+          <rect width="100" height="100" [style.fill]="result.color" />
+        </svg>
+
+        <svg *ngIf="result.shape === 'circle'">
+          <circle cx="50" cy="50" r="50" [style.fill]="result.color" />
+        </svg>
+
+        <svg *ngIf="result.shape === 'triangle'">
+          <polygon points="50 15, 100 100, 0 100" [style.fill]="result.color" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+<span *ngIf="render$ | async"></span>
