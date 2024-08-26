@@ -3,14 +3,25 @@ import {
   Subject,
   Subscription,
   concatMap,
+  delay,
   exhaustMap,
+  filter,
   forkJoin,
   map,
   mergeMap,
   switchMap,
+  take,
   tap,
+  zip,
 } from 'rxjs';
 import { ApiService } from './services/api.service';
+
+interface Person {
+  id: number;
+  name: string;
+  friends: string[];
+  age: number;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,8 +29,19 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent {
   title = 'rxjs-reference';
-  public data: any[] = [];
+  public data: Person[] = [];
   public stream$ = new Subject<number>();
+
+  public betty$ = new Subject<string>();
+  public charlie$ = new Subject<string>();
+  public daniel$ = new Subject<string>();
+  public elon$ = new Subject<string>();
+
+  public betty$$ = this.betty$.pipe(
+    tap(() => this.apiService.getPersonById(1)),
+    delay(1000)
+  );
+
   constructor(private apiService: ApiService) {}
   public ngOnInit(): void {
     this.apiService.requestingPersonId$.subscribe((id: any) => {
@@ -123,20 +145,74 @@ export class AppComponent {
       return;
     }
 
-    this.forkJoinStream$ = forkJoin({
-      first: this.apiService.getPersonById(1),
-      second: this.apiService.getPersonById(2),
-      third: this.apiService.getPersonById(3),
-      fourth: this.apiService.getPersonById(4),
-    })
+    this.forkJoinStream$ = forkJoin([
+      this.stream$.pipe(
+        filter((value: number) => value === 1),
+        switchMap((value: number) => this.apiService.getPersonById(value)),
+        take(1)
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 2),
+        switchMap((value: number) => this.apiService.getPersonById(value)),
+        take(1)
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 3),
+        switchMap((value: number) => this.apiService.getPersonById(value)),
+        take(1)
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 4),
+        switchMap((value: number) => this.apiService.getPersonById(value)),
+        take(1)
+      ),
+    ])
       .pipe(
+        tap((data: any) => {
+          console.log(data);
+        }),
         map((result: any) => Object.values(result)),
         tap((result: any) => this.data.push(...result))
       )
       .subscribe();
   }
 
+  public zipStream$: Subscription | null = null;
+  public zipExample(): void {
+    if (this.zipStream$) {
+      this.zipStream$.unsubscribe();
+      this.zipStream$ = null;
+      return;
+    }
+
+    this.zipStream$ = zip([
+      this.stream$.pipe(
+        filter((value: number) => value === 1),
+        switchMap((value: number) => this.apiService.getPersonById(value))
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 2),
+        switchMap((value: number) => this.apiService.getPersonById(value))
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 3),
+        switchMap((value: number) => this.apiService.getPersonById(value))
+      ),
+      this.stream$.pipe(
+        filter((value: number) => value === 4),
+        switchMap((value: number) => this.apiService.getPersonById(value))
+      ),
+    ])
+      .pipe(tap((result: any) => this.data.push(...result)))
+      .subscribe();
+  }
+
   public signalSendingBtns: boolean[] = [];
+
+  /**
+   * Исключительно визуал
+   * @param btnId
+   */
   public sendSignal(btnId: number) {
     this.signalSendingBtns[btnId] = true;
     setTimeout(() => {
